@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path='' element={<Login />}/>
-        <Route exact path='register' element={<Register />}/>
+        <Route exact path='/register' element={<Register />}/>
       </Routes>
     </Router>
   );

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 import '../component/login.css';
 
 function Login() {
@@ -11,7 +13,7 @@ function Login() {
 
 const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post(
         'http://127.0.0.1:5000/login',
@@ -60,7 +62,7 @@ const handleLogin = async (e) => {
             </button>
           </div>
         </form>
-        <p>Don't have an account? <a href="{{url_for('register')}}">Register here</a>.</p>
+        <p>Don't have an account? <Link to="/register">Register here</Link>.</p>
         {message && <p>{message}</p>}
       </div>
     </>
