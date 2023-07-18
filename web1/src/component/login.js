@@ -14,6 +14,9 @@ function Login() {
             <input type="password" id="password" name="password" placeholder="Password" required />
           </div>
           <div className="form-group">
+            <input type="password" id="password" name="password" placeholder="Password" required />
+          </div>
+          <div className="form-group">
             <button type="submit" className="btn">Login</button>
           </div>
         </form>
