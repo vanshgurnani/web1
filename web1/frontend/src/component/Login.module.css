@@ -1,15 +1,20 @@
 /* General styling for the body */
-.body {
+.body1 {
   background-image: url(images/background.jpg);
   background-size: cover;
   font-family: Arial, sans-serif;
   color: #fff;
   margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0;
 }
 
 /* Styling for the container holding the login form */
 .container {
+  /* width: 100%; */
   max-width: 400px;
   margin: 130px auto;
   padding: 50px;

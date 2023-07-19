@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './register.module.css';
+import '../component/register.module.css';
 
 function RegistrationForm() {
   const [firstName, setFirstName] = useState('');
@@ -25,22 +26,23 @@ function RegistrationForm() {
         password,
       });
       console.log(response.data); // Handle the response as needed
-      // Reset form fields
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setPhone('');
-    setPassword('');
-    setConfirmPassword('');
 
-    setSuccess(true);
-    setMessage(response.data.message); // Set the response message in state
+      // Reset form fields
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPhone('');
+      setPassword('');
+      setConfirmPassword('');
+
+      setSuccess(true);
+      setMessage(response.data.message); // Set the response message in state
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
-    
     <div className={styles.body}>
       <div className={styles.container}>
         {success && <small>{message}</small>}
