@@ -63,7 +63,7 @@ const handleLogin = async (e) => {
           </div>
         </form>
         <p>Don't have an account? <Link to="/register">Register here</Link>.</p>
-        {message && <p>{message}</p>}
+        {message && <p className='message'>{message}</p>}
       </div>
     </>
   );

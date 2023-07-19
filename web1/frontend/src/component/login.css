@@ -78,3 +78,12 @@ p a:hover {
 small {
   color: rgb(254, 153, 153);
 }
+small{
+    color:rgb(254, 153, 153);
+    
+}
+
+.message{
+  color: red;
+}
+

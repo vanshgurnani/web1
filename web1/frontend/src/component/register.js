@@ -1,67 +1,126 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-class RegistrationForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      password: '',
-      confirmPassword: '',
-      success: false,
-    };
-  }
+function RegistrationForm() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState('');
 
-  handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form validation and submission logic here
-    // You can use this.state to access the form values
-    // and make API calls or perform any necessary actions
-    // Once the registration is successful, set `success` to true
-    this.setState({ success: true });
-  }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/register', {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+      });
+      console.log(response.data); // Handle the response as needed
+      // Reset form fields
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPhone('');
+    setPassword('');
+    setConfirmPassword('');
 
-  render() {
-    const { success } = this.state;
+    setSuccess(true);
+    setMessage(response.data.message); // Set the response message in state
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    return (
-      <div className="container">
-        {success && <small>✅ User Registered Successfully, Login to Proceed</small>}
-        <h2>Registration</h2>
-        <form id="registration-form" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <input type="text" id="first-name" name="firstName" placeholder="First Name" required onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="text" id="last-name" name="lastName" placeholder="Last Name" required onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="email" id="email" name="email" placeholder="Email" required onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="password" id="password" name="password" placeholder="Create Password" required onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm Password" required onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <button type="submit" className="btn">Register</button>
-          </div>
-        </form>
-        <p>Already have an account? <Link to="/">Login here</Link>.</p>
-      </div>
-    );
-  }
+  return (
+    <div className="container">
+      {success && <small>{message}</small>}
+      <h2>Registration</h2>
+      <form id="registration-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <input
+            type="text"
+            id="first-name"
+            name="firstName"
+            placeholder="First Name"
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            id="last-name"
+            name="lastName"
+            placeholder="Last Name"
+            required
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Phone Number"
+            required
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Create Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <button type="submit" className="btn">
+            Register
+          </button>
+        </div>
+      </form>
+      <p>
+        Already have an account? <Link to="/">Login here</Link>.
+      </p>
+    </div>
+  );
 }
 
 export default RegistrationForm;
