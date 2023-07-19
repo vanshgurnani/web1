@@ -1,0 +1,49 @@
+.navbar .form-center {
+    margin: 10px;
+}
+.carousel-inner {
+    height: 300px; /* Set the desired height here */
+  }
+
+  .img-content{
+    height: 300px;
+  }
+  .card{
+    width: 20rem;
+    margin: 30px;
+    right: 60px;
+  }
+  .list-group-item{
+    cursor:pointer;
+  }
+  footer{
+    background-color: black;
+  }
+  /* .black-box{
+    background-color: black;
+    color: white;
+  } */
+  .category-card{
+    right: 20px;
+    margin: 30px;
+  }
+  .categories-card{
+    left: -60px;
+  }
+  .black-box{
+    background-color: black;
+    color: aliceblue;
+    padding: 100px;
+
+  }
+  #horizontal-line{
+    margin: 0;
+  }
+  .content-para {
+    max-width: 400px; /* Adjust the value as desired */
+    margin: 0 auto; /* Center the box horizontally */
+  }
+
+  .category-card {
+    display: none;
+}
