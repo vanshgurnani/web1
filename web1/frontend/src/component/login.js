@@ -31,7 +31,7 @@ const handleLogin = async (e) => {
   
   return (
     <>
-      <div className="body">
+      <div className="body1">
       <div className="container">
       <h2>Login</h2>
       <form id="registration-form" onSubmit={handleLogin}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import '../component/register.css';
 function RegistrationForm() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -40,7 +40,7 @@ function RegistrationForm() {
   };
   return (
     
-    <div className='body'>
+    <div className='body2'>
     <div className="container">
     {success && <small>{message}</small>}
     <h2>Registration</h2>

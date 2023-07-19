@@ -1,15 +1,17 @@
-.body {
-    background-image: url(images/background.jpg);
-    background-size: cover;
-    /* background: linear-gradient(to right, #333, #111); */
-    font-family: Arial, sans-serif;
-    color: #fff;
-    margin: 0;
-    padding: 0;
+.body2 {
+  background-image: url(images/background.jpg);
+  background-size: cover;
+  /* background: linear-gradient(to right, #333, #111); */
+  font-family: Arial, sans-serif;
+  color: #fff;
+  height: 100vh; /* Set height to 100% of viewport height */
+  display: flex; /* Use flexbox to center the .container */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
   }
   
 .container {
-    
+    /* width: 100%; */
     max-width: 400px;
     margin: 40px auto;
     padding: 40px;
