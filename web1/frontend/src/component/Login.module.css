@@ -19,7 +19,7 @@
 }
 
 /* Styling for the login form heading */
-h2 {
+.login-head {
   text-align: center;
   padding-top: 0px;
   padding-bottom: 10px;

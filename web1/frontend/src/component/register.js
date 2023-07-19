@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import styles from './register.module.css';
 
 function RegistrationForm() {
   const [firstName, setFirstName] = useState('');
@@ -40,87 +41,87 @@ function RegistrationForm() {
   };
   return (
     
-    <div className='body'>
-    <div className="container">
-    {success && <small>{message}</small>}
-    <h2>Registration</h2>
-    <form id="registration-form" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          type="text"
-          id="first-name"
-          name="firstName"
-          placeholder="First Name"
-          required
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
+    <div className={styles.body}>
+      <div className={styles.container}>
+        {success && <small>{message}</small>}
+        <h2>Registration</h2>
+        <form id="registration-form" onSubmit={handleSubmit}>
+          <div className={styles['form-group']}>
+            <input
+              type="text"
+              id="first-name"
+              name="firstName"
+              placeholder="First Name"
+              required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <input
+              type="text"
+              id="last-name"
+              name="lastName"
+              placeholder="Last Name"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Phone Number"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Create Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <button type="submit" className={styles.btn}>
+              Register
+            </button>
+          </div>
+        </form>
+        <p>
+          Already have an account? <Link to="/">Login here</Link>.
+        </p>
       </div>
-      <div className="form-group">
-        <input
-          type="text"
-          id="last-name"
-          name="lastName"
-          placeholder="Last Name"
-          required
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          placeholder="Phone Number"
-          required
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Create Password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          id="confirm-password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          required
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <button type="submit" className="btn">
-          Register
-        </button>
-      </div>
-    </form>
-    <p>
-      Already have an account? <Link to="/">Login here</Link>.
-    </p>
-  </div>
     </div>
   );
 }
