@@ -1,34 +1,36 @@
-body {
+/* General styling for the body */
+.body {
   background-image: url(images/background.jpg);
   background-size: cover;
-  /* background: linear-gradient(to right, #333, #111); */
   font-family: Arial, sans-serif;
   color: #fff;
   margin: 0;
   padding: 0;
 }
 
+/* Styling for the container holding the login form */
 .container {
   max-width: 400px;
   margin: 130px auto;
   padding: 50px;
-  /* background-color: rgba(255, 255, 255, 0.2); */
   border-radius: 8px;
   border: 1px solid #fff;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Styling for the login form heading */
 h2 {
   text-align: center;
   padding-top: 0px;
   padding-bottom: 10px;
-  /* font-size: 0px; */
 }
 
+/* Styling for form groups (input fields) */
 .form-group {
   margin-bottom: 20px;
 }
 
+/* Styling for input fields (text, email, tel, password) */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -43,11 +45,13 @@ input[type="password"] {
   color: white;
 }
 
+/* Styling for input placeholders */
 input::placeholder {
   opacity: 0.5;
   color: white;
 }
 
+/* Styling for the submit button */
 button[type="submit"] {
   width: 100%;
   padding: 10px;
@@ -59,31 +63,32 @@ button[type="submit"] {
   cursor: pointer;
 }
 
+/* Styling for the submit button on hover */
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
+/* Styling for text paragraphs */
 p {
   text-align: center;
 }
 
+/* Styling for links in paragraphs */
 p a {
   color: white;
 }
 
+/* Styling for links on hover in paragraphs */
 p a:hover {
   color: #0056b3;
 }
 
+/* Styling for small elements */
 small {
   color: rgb(254, 153, 153);
 }
-small{
-    color:rgb(254, 153, 153);
-    
-}
 
-.message{
+/* Styling for message elements (e.g., error messages) */
+.message {
   color: red;
 }
-

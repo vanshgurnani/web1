@@ -31,40 +31,43 @@ const handleLogin = async (e) => {
   
   return (
     <>
+      <div className="body">
       <div className="container">
-        <h2>Login</h2>
-        <form id="registration-form" onSubmit={handleLogin}>
-          <div className="form-group">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <button type="submit" className="btn">
-              Login
-            </button>
-          </div>
-        </form>
-        <p>Don't have an account? <Link to="/register">Register here</Link>.</p>
-        {message && <p className='message'>{message}</p>}
-      </div>
+      <h2>Login</h2>
+      <form id="registration-form" onSubmit={handleLogin}>
+        <div className="form-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <button type="submit" className="btn">
+            Login
+          </button>
+        </div>
+      </form>
+      <p>Don't have an account? <Link to="/register">Register here</Link>.</p>
+      {message && <p className='message'>{message}</p>}
+    </div>
+    </div>
+      
     </>
   );
 }

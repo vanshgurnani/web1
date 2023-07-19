@@ -1,4 +1,4 @@
-body {
+.body {
     background-image: url(images/background.jpg);
     background-size: cover;
     /* background: linear-gradient(to right, #333, #111); */
