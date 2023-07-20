@@ -1,41 +1,49 @@
 .App {
-    font-family: Arial, sans-serif;
-    display: flex;
-  }
-  
-  .sidebar {
-    width: 20%;
-    background-color: #f1f1f1;
-    padding: 50px;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar li {
-    cursor: pointer;
-    padding: 8px;
-  }
-  
-  .sidebar li.active {
-    background-color: #ddd;
-  }
-  
-  .main-content {
-    width: 80%;
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .card {
-    border: 1px solid #ccc;
-    padding: 16px;
-    margin: 30px;
-    width: 200px;
-  }
-.productImage{
+  font-family: Arial, sans-serif;
+  display: flex;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #f1f1f1;
+  padding: 50px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.sidebar li.active {
+  background-color: #ddd;
+}
+
+/* Style the checkboxes */
+.sidebar input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.main-content {
+  width: 80%;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 30px;
+  width: 200px;
+}
+
+.productImage {
   width: 90%;
 }

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,8 +18,12 @@ function Login() {
         { email, password },
         { headers: { 'Content-Type': 'application/json' } }
       );
-      console.log(response.data); // Handle the response as needed
-      setMessage(response.data.message); // Set the response message in state
+
+      setMessage(response.data.message);
+
+      if (response.data.message === 'Login successful') {
+        navigate('/'); // Redirect to the home page upon successful login
+      }
     } catch (error) {
       console.error(error);
     }

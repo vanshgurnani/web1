@@ -20,7 +20,7 @@ def home():
     return "Flask is running"
 
 categories_data = {
-    'tech': [
+    'Tech': [
         {
             'title': 'Tech Item 1',
             'imageSrc': 'images/headphone.jpg',
@@ -69,7 +69,7 @@ categories_data = {
 
         # Add more tech items as needed
     ],
-    'fashion': [
+    'Fashion': [
         {
             'title': 'Fashion Item 1',
             'imageSrc': 'images/shirt.jpg',
@@ -82,7 +82,7 @@ categories_data = {
         },
         # Add more fashion items as needed
     ],
-    'accessories': [
+    'Accessories': [
         {
             'title': 'Accessory 1',
             'imageSrc': 'images/accessories.jpg',
@@ -128,6 +128,7 @@ def register():
     result = cursor.fetchone()
 
     if result is not None and email == result[0] :
+        cursor.close()
         return jsonify({'message': 'Email Already Exist! Kindly Login'})
 
     if password != confirmPassword:
@@ -152,22 +153,30 @@ def login():
     email = request.json.get('email')
     password = request.json.get('password')
 
+    print(email)
+    print(password)
     # Perform database operations
     cursor = db.cursor()
 
     # Execute a query to retrieve the user based on the provided email
-    query = 'SELECT Email, Password FROM main WHERE Email = %s and Password = %s'
-    cursor.execute(query, (email, password))
+    query = 'SELECT Email, Password FROM main WHERE Email = %s'
+    cursor.execute(query, (email,))
     result = cursor.fetchone()
 
-    if result:
-        retrieved_hashedpw = bytes(result[1])
-        if bcrypt.checkpw(password.encode('utf-8'), retrieved_hashedpw):
-            session['Email'] = result[0]
-            return jsonify({'message': 'Login successful'})
-        
-    cursor.close()
-    return jsonify({'message': 'Invalid credentials'})
+    print(result)
+
+    if result is None:
+        cursor.close()
+        return jsonify({'message': 'User not found'}), 404
+    
+    retrieved_hashedpw = bytes(result[1])
+    if bcrypt.checkpw(password.encode('utf-8'), retrieved_hashedpw):
+        session['Email'] = result[0]
+        cursor.close()
+        return jsonify({'message': 'Login successful'})
+    else:
+        cursor.close()
+        return jsonify({'message': 'Invalid credentials'})
 
 
 @app.route('/logout')

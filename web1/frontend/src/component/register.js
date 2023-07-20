@@ -23,6 +23,7 @@ function RegistrationForm() {
         email,
         phone,
         password,
+        confirmPassword,
       });
       console.log(response.data); // Handle the response as needed
       // Reset form fields
@@ -119,7 +120,7 @@ function RegistrationForm() {
           </div>
         </form>
         <p>
-          Already have an account? <Link to="/">Login here</Link>.
+          Already have an account? <Link to="/login">Login here</Link>.
         </p>
       </div>
     </div>
