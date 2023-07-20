@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './productdetail.module.css'; // Import your custom CSS file or module here if needed
 
 const Details = () => {
+  
   return (
     <div className={styles['card-wrapper']}>
       <div className={styles.card}>
