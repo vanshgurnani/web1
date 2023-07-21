@@ -2,8 +2,7 @@ import mysql.connector
 from flask_cors import CORS
 import bcrypt
 from flask import Flask, request, jsonify, session
-import jwt
-import datetime
+
 
 app = Flask(__name__)
 app.secret_key = 'Arun_Chandra'
@@ -151,18 +150,14 @@ def register():
         cursor.close()
 
     # return jsonify({'message': "Error, Please Try Again"})
-def create_token(email):
-    payload = {'Email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)}
-    token = jwt.encode(payload, app.secret_key, algorithm='HS256')
-    return token
-
-# Route for user login
-@app.route("/login", methods=['POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     # Retrieve data from the request
     email = request.json.get('email')
     password = request.json.get('password')
 
+    # print(email)
+    # print(password)
     # Perform database operations
     cursor = db.cursor()
 
@@ -171,37 +166,36 @@ def login():
     cursor.execute(query, (email,))
     result = cursor.fetchone()
 
+    # print(result)
+
     if result is None:
         cursor.close()
         return jsonify({'message': 'User not found'}), 404
-
+    
     retrieved_hashedpw = bytes(result[1])
     if bcrypt.checkpw(password.encode('utf-8'), retrieved_hashedpw):
-        # Generate a token and send it in the response
-        token = create_token(email)
+        session['Email'] = result[0]
+        print(session['Email'])
+        # print(result[0])
         cursor.close()
-        return jsonify({'message': 'Login successful', 'token': token}), 200
+        return jsonify({'message': 'Login successful'})
     else:
         cursor.close()
-        return jsonify({'message': 'Invalid credentials'}), 401
+        return jsonify({'message': 'Invalid credentials'})
 
 @app.route('/check_login')
 def check_login():
-    # Get the token from the Authorization header
-    token = request.headers.get('Authorization')
-
-    if token:
-        try:
-            # Decode the token and extract the email
-            decoded_token = jwt.decode(token, app.secret_key, algorithms=['HS256'])
-            email = decoded_token['Email']
-            return jsonify({'message': 'Logged in', 'email': email}), 200
-        except jwt.ExpiredSignatureError:
-            return jsonify({'message': 'Token has expired'}), 401
-        except jwt.InvalidTokenError:
-            return jsonify({'message': 'Invalid token'}), 401
-
-    return jsonify({'message': 'Not logged in'}), 401
+    # print(session['Email'])
+    email = session.get('Email')
+    print(email)
+    if email:
+        return jsonify({'message': 'Logged in'}), 200
+    else:
+        return jsonify({'message': 'Not logged in'}), 401
+    
+@app.route('/logout')
+def logout():
+    del session['Email']
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -11,18 +11,22 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await axios.post(
         'http://127.0.0.1:5000/login',
         { email, password },
         { headers: { 'Content-Type': 'application/json' } }
       );
-
-      setMessage(response.data.message);
-
-      if (response.data.message === 'Login successful') {
-        navigate('/'); // Redirect to the home page upon successful login
+      
+      setMessage(response.data.message); // Always set the message from the response
+      
+      if (response.status === 200) {
+        // Save the token to local storage
+        localStorage.setItem('token', response.data.token);
+  
+        // Redirect to the home page upon successful login
+        navigate('/');
       }
     } catch (error) {
       console.error(error);
