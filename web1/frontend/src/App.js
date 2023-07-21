@@ -3,6 +3,7 @@ import Login from '../src/component/login';
 import Register from '../src/component/register';
 import Home from '../src/component/home';
 import Cart from '../src/component/cart';
+import Details from './component/productdetail';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route exact path='/login' element={<Login />}/>
         <Route exact path='/register' element={<Register />}/>
         <Route exact path='/cart' element={<Cart />}/>
+        <Route exact path='/detail' element={<Details />}/>
       </Routes>
     </Router>
   );
