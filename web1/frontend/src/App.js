@@ -4,6 +4,7 @@ import Register from '../src/component/register';
 import Home from '../src/component/home';
 import Cart from '../src/component/cart';
 import Details from './component/productdetail';
+import Checkout from '../src/component/checkout';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path='/register' element={<Register />}/>
         <Route exact path='/cart' element={<Cart />}/>
         <Route exact path='/detail' element={<Details />}/>
+        <Route exact path='/checkout' element={<Checkout />}/>
       </Routes>
     </Router>
   );
