@@ -1,40 +1,45 @@
 import React from 'react';
 import styles from './productdetail.module.css'; // Import your custom CSS file or module here if needed
+import Navbar from './navbar';
+import Footer from './footer';
 
 const Details = () => {
   
   return (
+    <><Navbar />
+    <br></br>
+    <br></br>
     <div className={styles['card-wrapper']}>
       <div className={styles.card}>
         <div className={styles['product-imgs']}>
           <div className={styles['img-display']}>
             <div className={styles['img-showcase']}>
-              <img src="linkHere" alt="image1" />
-              <img src="linkHere" alt="image1" />
-              <img src="linkHere" alt="image2" />
-              <img src="linkHere" alt="image3" />
-              <img src="linkHere" alt="image4" />
+              <img src="images/headphone.jpg" alt="image1" />
+              <img src="images/headphone.jpg" alt="image1" />
+              <img src="images/headphone.jpg" alt="image2" />
+              <img src="images/headphone.jpg" alt="image3" />
+              <img src="images/headphone.jpg" alt="image4" />
             </div>
           </div>
           <div className={styles['img-select']}>
             <div className={styles['img-item']}>
               <a href="#" data-id="1">
-                <img src="linkHere" alt="image1" />
+                <img src="images/deal1.jpg" alt="image1" />
               </a>
             </div>
             <div className={styles['img-item']}>
               <a href="#" data-id="2">
-                <img src="linkHere" alt="image2" />
+                <img src="images/deal1.jpg" alt="image2" />
               </a>
             </div>
             <div className={styles['img-item']}>
               <a href="#" data-id="3">
-                <img src="linkHere" alt="image3" />
+                <img src="images/deal1.jpg" alt="image3" />
               </a>
             </div>
             <div className={styles['img-item']}>
               <a href="#" data-id="4">
-                <img src="linkHere" alt="image4" />
+                <img src="images/deal1.jpg" alt="image4" />
               </a>
             </div>
           </div>
@@ -49,14 +54,15 @@ const Details = () => {
             <i className="fas fa-star"></i>
             <i className="fas fa-star"></i>
             <i className="fas fa-star-half-alt"></i>
-            <span>4.7(21)</span>
+            <span>4.7</span>
+            <span>(21)</span>
           </div>
           <div className={styles['product-price']}>
             <p className={styles['last-price']}>Old Price: <span>Rs.4000</span></p>
-            <p className={styles['new-price']}>New Price: <span>Rs.3800 (5%)</span></p>
+            <p className={styles['new-price']}>New Price: <span>Rs.3800</span></p>
           </div>
           <div className={styles['product-detail']}>
-            <h2>about this item: </h2>
+            <h2>About This Item: </h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
             <ul>
@@ -96,6 +102,8 @@ const Details = () => {
         </div>
       </div>
     </div>
+    <br></br>
+    <br></br><Footer /></>
   );
 };
 

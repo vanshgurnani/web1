@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import styles from './items.module.css';
 
 const Items = () => {
@@ -63,6 +64,7 @@ const Items = () => {
         </ul>
       </div>
 
+      <Link to="/detail">
       <div className={styles['main-content']}>
         {filteredItems.map((item, index) => (
           <div key={index} className={styles.card}>
@@ -74,6 +76,7 @@ const Items = () => {
           </div>
         ))}
       </div>
+      </Link>
     </div>
   );
 };
