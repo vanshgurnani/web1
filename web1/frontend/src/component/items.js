@@ -64,7 +64,7 @@ const Items = () => {
         </ul>
       </div>
 
-      <Link to="/detail">
+      {/* <Link to="/detail">
       <div className={styles['main-content']}>
         {filteredItems.map((item, index) => (
           <div key={index} className={styles.card}>
@@ -76,7 +76,19 @@ const Items = () => {
           </div>
         ))}
       </div>
-      </Link>
+      </Link> */}
+
+<div className={styles['main-content']}>
+        {filteredItems.map((product, index) => (
+          <div key={index} className={styles.card}>
+            <img src={product.imageSrc} alt={product.title} className={styles.productImage} />
+            <div className={styles.productName}>{product.title}</div>
+            <div className={styles.productDescription}>{product.description}</div>
+            <Link to={`/detail/${product.product_id}`} className="btn btn-success m-2">Buy</Link>
+            <button type="button" className="btn btn-danger m-2">Danger</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

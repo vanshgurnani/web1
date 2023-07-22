@@ -60,7 +60,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div className="container-fluid">
       <a className="navbar-brand" href="#">
-        <img src="images/home.png" alt="Bootstrap" width={30} height={24} />
+        <img src="/images/home.png" alt="Bootstrap" width={30} height={24} />
       </a>
       <a className="navbar-brand" href="#">
         Shopstore
@@ -101,7 +101,7 @@ function Navbar() {
           </button>
         </form>
         <button onClick={handleCartClick} type="button" className="btn btn-light me-2">
-          <img src="images/cart.svg" alt="" />
+          <img src="/images/cart.svg" alt="" />
         </button>
         {loggedIn ? (
           // If logged in, show the "Logout" button

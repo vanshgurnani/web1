@@ -11,104 +11,118 @@ app.secret_key = 'Arun_Chandra'
 # Allow CORS with credentials
 cors = CORS(app)
 # Configure MySQL connection
-db = mysql.connector.connect(
-    host='localhost',
-    user= 'root',
-    password = "",
-    database = 'userdata'
-)
+
 
 # Route for user login
 @app.route("/")
 def home():
     return "Flask is running"
 
-categories_data = {
-    'Tech': [
-        {
-            'title': 'Tech Item 1',
-            'imageSrc': 'images/headphone.jpg',
-            'description': 'Description of Tech Item 1',
-        },
-        {
-            'title': 'Tech Item 2',
-            'imageSrc': 'images/headphone.jpg',
-            'description': 'Description of Tech Item 2',
-        },
-        {
-            "title": "Tech Item 3",
-            "imageSrc": "images/headphone.jpg",
-            "description": "Description of Tech Item 3"
-        },
-        {
-            'title': 'Tech Item 4',
-            'imageSrc': 'images/headphone.jpg',
-            'description': 'Description of Tech Item 4',
-        },
-        {
-            'title': 'Tech Item 5',
-            'imageSrc': 'images/headphone.jpg',
-            'description': 'Description of Tech Item 5',
-        },
-        {
-            "title": "Tech Item 6",
-            "imageSrc": "images/headphone.jpg",
-            "description": "Description of Tech Item 6"
-        },
-        {
-            'title': 'Tech Item 7',
-            'imageSrc': 'images/headphone.jpg',
-            'description': 'Description of Tech Item 7',
-        },
-        {
-            'title': 'Tech Item 8',
-            'imageSrc': 'images/headphone.jpg',
-            'description': 'Description of Tech Item 8',
-        },
-        {
-            "title": "Tech Item 9",
-            "imageSrc": "images/headphone.jpg",
-            "description": "Description of Tech Item 9"
-        },
-
-        # Add more tech items as needed
-    ],
-    'Fashion': [
-        {
-            'title': 'Fashion Item 1',
-            'imageSrc': 'images/shirt.jpg',
-            'description': 'Description of Fashion Item 1',
-        },
-        {
-            'title': 'Fashion Item 2',
-            'imageSrc': 'images/shirt.jpg',
-            'description': 'Description of Fashion Item 2',
-        },
-        # Add more fashion items as needed
-    ],
-    'Accessories': [
-        {
-            'title': 'Accessory 1',
-            'imageSrc': 'images/accessories.jpg',
-            'description': 'Description of Accessory 1',
-        },
-        {
-            'title': 'Accessory 2',
-            'imageSrc': 'images/accessories.jpg',
-            'description': 'Description of Accessory 2',
-        },
-        # Add more accessory items as needed
-    ],
-    # Add more categories as needed
-}
-
 @app.route('/api/categories')
 def get_categories():
+    
+
+    productdb = mysql.connector.connect(
+    host='localhost',
+    user= 'root',
+    password = "",
+    database = 'productinfo'
+    )
+
+    categories_data = {}
+
+    try:
+        cursor = productdb.cursor()
+
+        query = "SELECT ProductID, ProductName, MainImage, Description, Category FROM `main`"
+
+        cursor.execute(query)
+
+        for row in cursor.fetchall():
+            product_id, product_name, main_image, description, category = row
+
+            if category not in categories_data:
+                categories_data[category] = []
+
+            item = {
+                'product_id': product_id,
+                'title': product_name,
+                'imageSrc': main_image,
+                'description': description,
+            }
+            categories_data[category].append(item)
+
+        cursor.close()
+        productdb.close()
+    except mysql.connector.Error as err:
+        print("Error connecting to MySQL:", err)
+
     return jsonify(categories_data)
 
+@app.route('/api/product/<int:product_id>')
+def get_product_details(product_id):
+    try:
+        productdb = mysql.connector.connect(
+        host='localhost',
+        user= 'root',
+        password = "",
+        database = 'productinfo'
+        )
+        cursor = productdb.cursor()
+
+        query = "SELECT * FROM main WHERE ProductID = %s"
+        cursor.execute(query, (product_id,))
+        product_data = cursor.fetchone()
+
+        if product_data:
+            product_details = {
+                'ProductID': product_data[0],
+                'ProductName': product_data[1],
+                'MainImage': product_data[2],
+                'ImageItem1': product_data[3],
+                'ImageItem2': product_data[4],
+                'ImageItem3': product_data[5],
+                'ImageItem4': product_data[6],
+                'Description': product_data[7],
+                'AboutThisItem': product_data[8],
+                'Ratings': product_data[9],
+                'NoOfReviews': product_data[10],
+                'OldPrice': product_data[11],
+                'NewPrice': product_data[12],
+                'Color': product_data[13],
+                'Available': product_data[14],
+                'Category': product_data[15],
+                'ShippingArea': product_data[16],
+                'ShippingFee': product_data[17],
+                'Quantity': product_data[18],
+            }
+
+            print(product_details['MainImage'])
+            print(product_details['ImageItem1'])
+            print(product_details['ImageItem2'])
+            print(product_details['ImageItem3'])
+            print(product_details['ImageItem4'])
+
+            cursor.close()
+            productdb.close()
+            return jsonify(product_details)
+        else:
+            cursor.close()
+            productdb.close()
+            return jsonify({'message': 'Product not found'}), 404
+
+    except mysql.connector.Error as err:
+        print("Error connecting to MySQL:", err)
+        return jsonify({'message': 'Error connecting to MySQL'}), 500
 
 @app.route('/register', methods=['POST'])
 def register():
+    db = mysql.connector.connect(
+    host='localhost',
+    user= 'root',
+    password = "",
+    database = 'userdata'
+    )
     data = request.get_json()
     if not data:
         return jsonify({'message': 'Invalid request body'}), 400
@@ -159,6 +173,12 @@ def create_token(email):
 # Route for user login
 @app.route("/login", methods=['POST'])
 def login():
+    db = mysql.connector.connect(
+    host='localhost',
+    user= 'root',
+    password = "",
+    database = 'userdata'
+)
     # Retrieve data from the request
     email = request.json.get('email')
     password = request.json.get('password')
