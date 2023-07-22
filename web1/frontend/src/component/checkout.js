@@ -141,8 +141,8 @@ const CheckoutForm = () => {
                   <h3>Payment</h3>
                   <label htmlFor="fname">Accepted Cards</label>
                   <div className="icon-cotain">
-                    <i className="fa fa-cc-visa" style={{ columnor: 'navy' }}></i>
-                    <i className="fa fa-cc-amex" style={{ columnor: 'blue' }}></i>
+                    <i className="fa fa-cc-visa" style={{ color: 'navy' }}></i>
+                    <i className="fa fa-cc-amex" style={{ color: 'blue' }}></i>
                     <i
                       className="fa fa-cc-mastercard"
                       style={{ columnor: 'red' }}
