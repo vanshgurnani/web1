@@ -1,9 +1,38 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import './cart.css'; // Import your custom CSS file or module here if needed
-
+import Navbar from './navbar';
+import Footer from './footer';
+import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 const ShoppingCart = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if the user is logged in by verifying the token
+    const checkLoginStatus = () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          // If the user is not logged in, redirect to the login page
+          navigate(-1);
+        } else {
+          // Decode the token to get the user information
+          const decodedToken = jwt_decode(token);
+          if (!decodedToken || !decodedToken.Email) {
+            // If the token is invalid or doesn't contain user information, redirect to the login page
+            navigate(-1);
+          }
+        }
+      } catch (error) {
+        console.error('Error checking login status:', error);
+      }
+    };
+
+    checkLoginStatus();
+  }, [navigate]);
+
   return (
-    <div className="wrapper">
+    <><Navbar /><div className="wrapper">
       <h1>Your Shopping Cart</h1>
       <div className="project">
         <div className="shop">
@@ -43,11 +72,11 @@ const ShoppingCart = () => {
           <p><span>Shipping</span> <span>₹15</span></p>
           <hr />
           <p><span>Total</span> <span>₹141</span></p>
-          <a href="#"><i className="fa fa-shopping-cart" />Checkout</a><br /><br /><br /><br /><br />
-          <a href="#"><i className="fa fa-shopping-cart" />Continue Shopping</a>
+          <a href="/checkout"><i className="fa fa-shopping-cart" />Checkout</a><br /><br /><br /><br /><br />
+          <a href="/home"><i className="fa fa-shopping-cart" />Continue Shopping</a>
         </div>
       </div>
-    </div>
+    </div><Footer /></>
   );
 };
 

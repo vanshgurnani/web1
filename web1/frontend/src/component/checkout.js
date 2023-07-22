@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import './checkout.css';
+import { useEffect} from 'react';
+import Navbar from './navbar';
+import Footer from './footer';
+import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutForm = () => {
   const [formData, setFormData] = useState({
@@ -31,8 +36,34 @@ const CheckoutForm = () => {
     console.log('Form data:', formData);
   };
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if the user is logged in by verifying the token
+    const checkLoginStatus = () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          // If the user is not logged in, redirect to the login page
+          navigate(-1);
+        } else {
+          // Decode the token to get the user information
+          const decodedToken = jwt_decode(token);
+          if (!decodedToken || !decodedToken.Email) {
+            // If the token is invalid or doesn't contain user information, redirect to the login page
+            navigate(-1);
+          }
+        }
+      } catch (error) {
+        console.error('Error checking login status:', error);
+      }
+    };
+
+    checkLoginStatus();
+  }, [navigate]);
+  
   return (
-    <div className="body">
+    <><Navbar /><div className="body">
       <h2>Checkout Form</h2>
       <div className="row">
         <div className="column-75">
@@ -50,8 +81,7 @@ const CheckoutForm = () => {
                     name="fname"
                     placeholder="Your name here"
                     value={formData.fname}
-                    onChange={handleChange}
-                  />
+                    onChange={handleChange} />
                   <label htmlFor="email">
                     <i className="fa fa-envelope"></i> Email
                   </label>
@@ -61,8 +91,7 @@ const CheckoutForm = () => {
                     name="email"
                     placeholder="xyz@gmail.com"
                     value={formData.email}
-                    onChange={handleChange}
-                  />
+                    onChange={handleChange} />
                   <label htmlFor="adr">
                     <i className="fa fa-address-card-o"></i> Address
                   </label>
@@ -72,8 +101,7 @@ const CheckoutForm = () => {
                     name="adr"
                     placeholder="your address here"
                     value={formData.adr}
-                    onChange={handleChange}
-                  />
+                    onChange={handleChange} />
                   <label htmlFor="city">
                     <i className="fa fa-institution"></i> City
                   </label>
@@ -83,8 +111,7 @@ const CheckoutForm = () => {
                     name="city"
                     placeholder="enter your city"
                     value={formData.city}
-                    onChange={handleChange}
-                  />
+                    onChange={handleChange} />
 
                   <div className="row">
                     <div className="column-50">
@@ -95,8 +122,7 @@ const CheckoutForm = () => {
                         name="state"
                         placeholder="Write Full State Name"
                         value={formData.state}
-                        onChange={handleChange}
-                      />
+                        onChange={handleChange} />
                     </div>
                     <div className="column-50">
                       <label htmlFor="zip">Zip</label>
@@ -106,8 +132,7 @@ const CheckoutForm = () => {
                         name="zip"
                         placeholder="Enter Pin code"
                         value={formData.zip}
-                        onChange={handleChange}
-                      />
+                        onChange={handleChange} />
                     </div>
                   </div>
                 </div>
@@ -134,8 +159,7 @@ const CheckoutForm = () => {
                     name="cname"
                     placeholder="ENTER CARD NAME"
                     value={formData.cname}
-                    onChange={handleChange}
-                  />
+                    onChange={handleChange} />
                   <label htmlFor="ccnum">Credit card number</label>
                   <input
                     type="text"
@@ -145,8 +169,7 @@ const CheckoutForm = () => {
                     value={formData.ccnum}
                     onChange={handleChange}
                     maxLength="19"
-                    required
-                  />
+                    required />
                   <label htmlFor="expmonth">Expiry Month</label>
                   <input
                     type="text"
@@ -154,8 +177,7 @@ const CheckoutForm = () => {
                     name="expmonth"
                     placeholder="December"
                     value={formData.expmonth}
-                    onChange={handleChange}
-                  />
+                    onChange={handleChange} />
                   <div className="row">
                     <div className="column-50">
                       <label htmlFor="expyear">Exp Year</label>
@@ -165,8 +187,7 @@ const CheckoutForm = () => {
                         name="expyear"
                         placeholder="2027"
                         value={formData.expyear}
-                        onChange={handleChange}
-                      />
+                        onChange={handleChange} />
                     </div>
                     <div className="column-50">
                       <label htmlFor="cvv">CVV</label>
@@ -176,8 +197,7 @@ const CheckoutForm = () => {
                         name="cvv"
                         placeholder="123"
                         value={formData.cvv}
-                        onChange={handleChange}
-                      />
+                        onChange={handleChange} />
                     </div>
                   </div>
                 </div>
@@ -187,13 +207,10 @@ const CheckoutForm = () => {
                   type="checkbox"
                   checked={formData.sameadr}
                   name="sameadr"
-                  onChange={() =>
-                    setFormData((prevFormData) => ({
-                      ...prevFormData,
-                      sameadr: !prevFormData.sameadr,
-                    }))
-                  }
-                />{' '}
+                  onChange={() => setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    sameadr: !prevFormData.sameadr,
+                  }))} />{' '}
                 Shipping address same as billing
               </label>
               <input type="submit" value="Continue to checkout" className="button" />
@@ -229,7 +246,7 @@ const CheckoutForm = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div><Footer /></>
   );
 };
 

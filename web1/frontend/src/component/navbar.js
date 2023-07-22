@@ -36,9 +36,11 @@ function Navbar() {
     try {
       // Clear the token from local storage
       localStorage.removeItem('token');
-      window.location.reload();
       setLoggedIn(false);
-      navigate('/');
+      // navigate('/'); //redirecting user to homepage
+      // navigate(-1); //redirecting user to previous page
+      window.location.href = window.location.pathname;
+      window.location.reload();
       // Redirect the user to the homepage after logout
     } catch (error) {
       console.error('Logout error:', error);
@@ -77,7 +79,7 @@ function Navbar() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="#">
+            <a className="nav-link active" aria-current="page" href="/">
               Home
             </a>
           </li>
