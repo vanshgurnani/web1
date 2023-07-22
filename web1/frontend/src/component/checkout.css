@@ -51,6 +51,9 @@
     border: 1px solid #ccc;
     border-radius: 3px;
   }
+  input::placeholder {
+    color: #999; /* Replace #999 with the desired color */
+  }
   
   label {
     margin-bottom: 10px;
