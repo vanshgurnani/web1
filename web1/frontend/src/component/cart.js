@@ -11,7 +11,7 @@ const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState([]);
   
   useEffect(() => {
-    
+
     // Check if the user is logged in by verifying the token
     const checkLoginStatus = () => {
       try {
@@ -140,7 +140,7 @@ const ShoppingCart = () => {
             <br />
             <br />
             <br />
-            <a href="/home">
+            <a href="/">
               <i className="fa fa-shopping-cart" />Continue Shopping
             </a>
           </div>

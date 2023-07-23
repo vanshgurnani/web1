@@ -39,7 +39,8 @@ function Navbar() {
       setLoggedIn(false);
       // navigate('/'); //redirecting user to homepage
       // navigate(-1); //redirecting user to previous page
-      window.location.href = window.location.pathname;
+      // window.location.href = window.location.pathname;
+      navigate('/')
       window.location.reload();
       // Redirect the user to the homepage after logout
     } catch (error) {
