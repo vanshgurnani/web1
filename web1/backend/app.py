@@ -18,6 +18,7 @@ cors = CORS(app)
 def home():
     return "Flask is running"
 
+
 @app.route('/api/categories')
 def get_categories():
     
@@ -97,12 +98,6 @@ def get_product_details(product_id):
                 'Quantity': product_data[18],
             }
 
-            print(product_details['MainImage'])
-            print(product_details['ImageItem1'])
-            print(product_details['ImageItem2'])
-            print(product_details['ImageItem3'])
-            print(product_details['ImageItem4'])
-
             cursor.close()
             productdb.close()
             return jsonify(product_details)
@@ -114,6 +109,192 @@ def get_product_details(product_id):
     except mysql.connector.Error as err:
         print("Error connecting to MySQL:", err)
         return jsonify({'message': 'Error connecting to MySQL'}), 500
+
+
+def add_to_cart(email, product_id, product_name, new_price, shipping_fee, quantity):
+    try:
+        cartdb = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='cartinfo'
+        )
+        # Connect to the MySQL database
+        cursor = cartdb.cursor()
+
+        # Check if a record already exists for the same product and email combination
+        query = "SELECT Quantity FROM main WHERE EmailID = %s AND ProductID = %s"
+        values = (email, product_id)
+        cursor.execute(query, values)
+        result = cursor.fetchone()
+
+        if result:
+            # Record already exists, update the quantity
+            existing_quantity = result[0]
+            new_quantity = existing_quantity + quantity
+
+            update_query = "UPDATE main SET Quantity = %s WHERE EmailID = %s AND ProductID = %s"
+            update_values = (new_quantity, email, product_id)
+            cursor.execute(update_query, update_values)
+            cartdb.commit()
+            cursor.close()
+            cartdb.close()
+            return 2  # Indicate that the quantity is updated
+
+        # Record does not exist, insert a new record
+        insert_query = "INSERT INTO main (EmailID, ProductID, ProductName, NewPrice, ShippingFee, Quantity) VALUES (%s, %s, %s, %s, %s, %s)"
+        insert_values = (email, product_id, product_name, new_price, shipping_fee, quantity)
+        cursor.execute(insert_query, insert_values)
+        cartdb.commit()
+        cursor.close()
+        cartdb.close()
+        return 1  # Indicate that a new record is inserted
+
+    except Exception as e:
+        print("Error adding item to cart:", e)
+        return 0
+
+
+@app.route('/api/cart', methods=['POST'])
+def add_to_cart_route():
+    try:
+        data = request.json
+        email = data['EmailID']
+        product_id = data['ProductID']
+        product_name = data['ProductName']
+        new_price = data['NewPrice']
+        shipping_fee = data['ShippingFee']
+        quantity = data['Quantity']
+
+        result = add_to_cart(email, product_id, product_name, new_price, shipping_fee, quantity)
+
+        if result == 1:
+            return jsonify({"message": "Item added to cart successfully!"}), 200
+        elif result == 2:
+            return jsonify({"message": f"{quantity} {product_name} ,also added to cart successfully"}), 200
+        else:
+            return jsonify({"error": "Failed to add item to cart."}), 500
+
+    except Exception as e:
+        print("Error processing request:", e)
+        return jsonify({"error": "Invalid request data."}), 400
+
+
+@app.route('/api/cart/items', methods=['GET'])
+def get_cart_items():
+    try:
+        # Get the user's email from the token in the request headers
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({"error": "No token provided."}), 401
+
+        decoded_token = jwt.decode(token.split(' ')[1], app.secret_key, algorithms=["HS256"])
+        email = decoded_token['Email']
+
+        cartdb = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='cartinfo'
+        )
+
+        productdb = mysql.connector.connect(
+        host='localhost',
+        user= 'root',
+        password = "",
+        database = 'productinfo'
+        )
+
+        
+        # Connect to the MySQL database
+        cursor = cartdb.cursor()
+        cursor2 = productdb.cursor()
+
+        # Fetch cart items for the given user
+        query = "SELECT * FROM main WHERE EmailID = %s"
+        values = (email,)
+        cursor.execute(query, values)
+
+        # Fetch the result
+        cart_items = []
+        for item in cursor.fetchall():
+            cart_item = {
+                "ProductID": item[1],
+                "ProductName": item[2],
+                "NewPrice": item[3],
+                "ShippingFee": item[4],
+                "Quantity": item[5]
+            }
+            
+            query2 = "SELECT MainImage FROM main WHERE ProductID = %s"
+            cursor2.execute(query2, (item[1],))
+            main_image = cursor2.fetchone()
+            if main_image:
+                cart_item["MainImage"] = main_image[0]  # The MainImage attribute is added to the cart item
+
+            cart_items.append(cart_item)
+
+        cursor2.close()
+        productdb.close()
+        cursor.close()
+        cartdb.close()
+        return jsonify(cart_items), 200
+
+    except Exception as e:
+        print("Error fetching cart items:", e)
+        return jsonify({"error": "Failed to fetch cart items."}), 500
+
+
+@app.route('/api/cart/items', methods=['DELETE'])
+def remove_cart_item():
+    try:
+        # Get the user's email from the token in the request headers
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({"error": "No token provided."}), 401
+
+        decoded_token = jwt.decode(token.split(' ')[1], app.secret_key, algorithms=["HS256"])
+        email = decoded_token['Email']
+
+        data = request.json
+        product_id = data.get('ProductID')
+
+        if not product_id:
+            return jsonify({"error": "ProductID is required."}), 400
+
+        cartdb = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='cartinfo'
+        )
+        cursor = cartdb.cursor()
+
+        # Check if the item exists in the cart for the given user
+        query = "SELECT Quantity FROM main WHERE EmailID = %s AND ProductID = %s"
+        values = (email, product_id)
+        cursor.execute(query, values)
+        result = cursor.fetchone()
+
+        if not result:
+            cursor.close()
+            cartdb.close()
+            return jsonify({"error": "Item not found in the cart."}), 404
+
+        # If the item exists, remove it from the cart
+        delete_query = "DELETE FROM main WHERE EmailID = %s AND ProductID = %s"
+        cursor.execute(delete_query, values)
+        cartdb.commit()
+
+        cursor.close()
+        cartdb.close()
+
+        return jsonify({"message": "Item removed from the cart successfully."}), 200
+
+    except Exception as e:
+        print("Error removing item from cart:", e)
+        return jsonify({"error": "Failed to remove item from cart."}), 500
+    
 
 @app.route('/register', methods=['POST'])
 def register():

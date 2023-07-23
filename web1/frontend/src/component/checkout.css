@@ -50,6 +50,7 @@
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    color:rgb(45, 45, 45);
   }
   input::placeholder {
     color: #999; /* Replace #999 with the desired color */

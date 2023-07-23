@@ -7,7 +7,7 @@ function Navbar() {
   const [loggedIn, setLoggedIn] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     // Check if the user is already logged in by verifying the token
     const checkLoginStatus = async () => {
@@ -59,10 +59,10 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div className="container-fluid">
-      <a className="navbar-brand" href="#">
+      <a className="navbar-brand" href="/">
         <img src="/images/home.png" alt="Bootstrap" width={30} height={24} />
       </a>
-      <a className="navbar-brand" href="#">
+      <a className="navbar-brand" href="/">
         Shopstore
       </a>
       <button

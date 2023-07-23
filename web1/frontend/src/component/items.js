@@ -85,7 +85,7 @@ const Items = () => {
             <div className={styles.productName}>{product.title}</div>
             <div className={styles.productDescription}>{product.description}</div>
             <Link to={`/detail/${product.product_id}`} className="btn btn-success m-2">Buy</Link>
-            <button type="button" className="btn btn-danger m-2">Danger</button>
+            {/* <button type="button" className="btn btn-danger m-2">Danger</button> */}
           </div>
         ))}
       </div>

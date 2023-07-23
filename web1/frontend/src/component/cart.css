@@ -21,6 +21,11 @@ body {
 }
 .shop {
 	flex: 75%;
+	display: flex;
+  	flex-wrap: wrap;
+  	gap: 30px;
+  	justify-content: center;
+  	min-height: 200px;
 }
 .box {
 	display: flex;
@@ -80,8 +85,8 @@ body {
 	flex: 25%;
     max-width: 100%;
 	margin-left: 100px;
-	padding: 20px;
-	height: 400px;
+	padding: 30px;
+	/* height: 330px; */
 	border-radius: 5px;
 	background: #fff;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -144,3 +149,12 @@ body {
 		max-width: 95%;
 	}
 }
+
+.empty-cart-message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 200px;
+	font-size: 24px;
+	color: #666;
+  }
