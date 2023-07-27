@@ -18,50 +18,30 @@ function team() {
       <div className="row">
         {/* col start */}
         <div className="col">
-          <img src="images/Rectangle 116.png" alt="" />
+          <img className='h-70' src="images/vansh.jpeg" alt="" />
           <br /><br />
-          <h5>Full Name</h5>
-          <p>Member</p>
-          <div className="row">
-            <div className="col-sm-3"><p><u>Linkedln</u></p></div>
-            <div className="col-sm-3"><p><u>mail</u></p></div>
-          </div>
+          <h5>Vansh Gurnani <br />Full Stack Developer</h5>
         </div>
         {/* col end */}
         {/* col start */}
         <div className="col">
-          <img src="images/Rectangle 116.png" alt="" />
+          <img className='h-70' src="images/ankit.jpeg" alt="" />
           <br /><br />
-          <h5>Full Name</h5>
-          <p>Member</p>
-          <div className="row">
-            <div className="col-sm-3"><p><u>Linkedln</u></p></div>
-            <div className="col-sm-3"><p><u>mail</u></p></div>
-          </div>
+          <h5>Ankit Ghosal<br />Frontend Developer</h5>
         </div>
         {/* col end */}
         {/* col start */}
         <div className="col">
-          <img src="images/Rectangle 116.png" alt="" />
+          <img className='h-70' src="images/arun.jpg" alt="" />
           <br /><br />
-          <h5>Full Name</h5>
-          <p>Member</p>
-          <div className="row">
-            <div className="col-sm-3"><p><u>Linkedln</u></p></div>
-            <div className="col-sm-3"><p><u>mail</u></p></div>
-          </div>
+          <h5>Arun Chandra <br />Backend Developer</h5>
         </div>
         {/* col end */}
         {/* col start */}
         <div className="col">
-          <img src="images/Rectangle 116.png" alt="" />
+          <img className='h-70' src="images/gayatri.jpeg" alt="" />
           <br /><br />
-          <h5>Full Name</h5>
-          <p>Member</p>
-          <div className="row">
-            <div className="col-sm-3"><p><u>Linkedln</u></p></div>
-            <div className="col-sm-3"><p><u>mail</u></p></div>
-          </div>
+          <h5>Gayatri Swain <br />Frontend Developer</h5>
         </div>
         {/* col end */}
       </div>
