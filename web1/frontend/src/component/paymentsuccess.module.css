@@ -1,0 +1,25 @@
+/* paymentSuccessful.css */
+
+.payment-successful {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* min-height: calc(100vh - 200px);  */
+  }
+  
+  .content {
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    color: #3f51b5;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  

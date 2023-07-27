@@ -1,23 +1,134 @@
 import mysql.connector
 from flask_cors import CORS
 import bcrypt
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify
 import jwt
 import datetime
+import stripe
 
 app = Flask(__name__)
 app.secret_key = 'Arun_Chandra'
 
-# Allow CORS with credentials
+stripe.api_key = 'sk_test_51NXpjiSIvjMQJZ8zB7Thc3R50IAGAXGGk18uD1aNwUqgsiVSISqXDaSwuR2AqNIVwOyzzKGRGWRJFydO23XH6pUd00XOAwLGz0'
+
+
 cors = CORS(app)
-# Configure MySQL connection
 
 
-# Route for user login
 @app.route("/")
 def home():
     return "Flask is running"
 
+
+def handle_payment(token, formData, totalamount):
+    try:
+        token_id = token['id']
+        
+        print(totalamount)  
+        # Create a Stripe charge using the token and other relevant information
+        charge = stripe.Charge.create(
+            amount=totalamount,  # Replace with the actual amount to be charged (in cents)
+            currency='inr',  # Replace with your preferred currency code
+            source=token_id,
+            description='Example charge',
+        )
+
+        # For adding to checkoutInfo Database (user details and Product ID)
+        email = str(formData['email'])
+
+
+        #Cart Databse
+        cartdb = mysql.connector.connect(
+                host='localhost',
+                user='root',
+                password='',
+                database='cartinfo'
+        )
+        cursor = cartdb.cursor()
+
+        query = "SELECT ProductID from main WHERE EmailID = %s"
+        cursor.execute(query, (email,))
+        result = cursor.fetchall()
+
+        #Checkout Database
+        checkoutdb = mysql.connector.connect(
+                host='localhost',
+                user='root',
+                password='',
+                database='checkoutinfo'
+        )
+        cursor2 = checkoutdb.cursor()
+
+        for item in result:
+        # Access the element of each tuple (assuming they have only one element)
+            query = "INSERT INTO MAIN(Name, Email, Address, City, State, Zip, ProductID) values (%s, %s, %s, %s, %s, %s, %s)"
+            values = (formData['fname'],formData['email'],formData['adr'],formData['city'],formData['state'],formData['zip'],item[0])
+            cursor2.execute(query, values)
+
+
+        cursor.close()
+        cartdb.close()
+        checkoutdb.commit()
+        cursor2.close()
+        checkoutdb.close()
+
+        
+        return jsonify({'success': True, 'message': 'Payment successful!'})
+    except stripe.error.CardError as e:
+        # If the card is declined, you can handle the error here-33333
+        return jsonify({'success': False, 'message': 'An error occurred during payment processing.'})
+    
+@app.route('/api/process-payment', methods=['POST'])
+def process_payment():
+    data = request.get_json()
+    token = data['token']
+    formData = data['formData']
+    total_amount = data['totalAmount']
+
+    # Call the handle_payment function to process the payment
+    result = handle_payment(token, formData, total_amount)
+
+    return result  
+
+
+#This methdos also clears the cart after Payment successful also add the checkout details in the database with product what the user have purchased
+@app.route('/api/emptycart', methods=['DELETE'])
+def empty_cart():
+    try:
+        # Get the user's email from the token in the request headers
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({"error": "No token provided."}), 401
+
+        decoded_token = jwt.decode(token.split(' ')[1], app.secret_key, algorithms=["HS256"])
+        email = decoded_token['Email']
+
+
+        cartdb = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='cartinfo'
+        )
+        cursor = cartdb.cursor()
+
+
+
+
+        # If the item exists, remove it from the cart
+        delete_query = "DELETE FROM main WHERE EmailID = %s"
+        cursor.execute(delete_query, email)
+        cartdb.commit()
+
+        cursor.close()
+        cartdb.close()
+
+        return jsonify({"message": "Item removed from the cart successfully."}), 200
+
+    except Exception as e:
+        print("Error removing item from cart:", e)
+        return jsonify({"error": "Failed to remove item from cart."}), 500
+    
 
 @app.route('/api/categories')
 def get_categories():

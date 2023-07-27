@@ -79,7 +79,7 @@ const ShoppingCart = () => {
     try {
 
       if(calculateTotal>0){
-        navigate('/checkout')
+        navigate('/checkout', { state: { totalAmount: calculateTotal} })
       }
       else{
         alert('You have nothing to checkout!')
@@ -88,6 +88,7 @@ const ShoppingCart = () => {
       console.error('Error:', error);
     }
   }
+  
   return (
     <>
       <Navbar />

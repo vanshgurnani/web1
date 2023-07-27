@@ -26,7 +26,7 @@ function Login() {
         localStorage.setItem('token', response.data.token);
   
         // Redirect to the home page upon successful login
-        navigate(-1);
+        navigate('/');
       }
     } catch (error) {
       console.error(error);
