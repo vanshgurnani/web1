@@ -18,7 +18,8 @@ function App() {
         <Route exact path='' element={<Home />}/>
         <Route exact path='/login' element={<Login />}/>
         <Route exact path='/register' element={<Register />}/>
-        <Route exact path='/paymentsuccessful' element={<PaymentSuccessful />} />
+        {/* <Route exact path='/paymentsuccessful' element={<PaymentSuccessful />} /> */}
+          {/* Uncomment the above line to make the use of it when the payment gateway is successfully deployed! */}
         <Route exact path='/cart' element={<Cart />}/>
         {/* <Route exact path='/detail' element={<Details />}/> */}
         <Route exact path="/detail/:productId" element={<Details/>}/>

@@ -81,7 +81,7 @@ const CheckoutForm = () => {
           }
           
           console.log('Payment successful!');
-          navigate('/paymentsuccessful');
+          // navigate('/paymentsuccessful'); //uncomment it when you turned on payment successful page
           // Add any further actions you want to perform after successful payment
         } else {
           // Payment failed
